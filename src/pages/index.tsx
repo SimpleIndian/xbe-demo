@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 export default function Home() {
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState<string>("");
+  const [modquery, setmodQuery] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isError, setError] = useState<boolean>(false);
 
@@ -15,13 +16,15 @@ export default function Home() {
     event.preventDefault();
     setLoading(true);
     const modifiedQuery = query.toLowerCase().split(" ").join("+");
+    setmodQuery(modifiedQuery)
     try {
-      const getSearchBook = await fetch(`https://openlibrary.org/search.json?q=${modifiedQuery}`);
+      const getSearchBook = await fetch(
+        `https://openlibrary.org/search.json?q=${modifiedQuery}&fields=*,availability&limit=20`
+      );
       if (getSearchBook.ok) {
         const booksRes = (await getSearchBook.json()) as SearchRes;
         setLoading(false);
         setDocs(booksRes.docs);
-        setQuery("");
       }
     } catch (error) {
       setLoading(false);
@@ -56,6 +59,8 @@ export default function Home() {
         {docs.length > 0 &&
           docs.map((doc) => (
             <BookCard
+              query={modquery}
+              id={doc.key}
               key={doc.key}
               title={doc.title}
               author={doc.author_name}

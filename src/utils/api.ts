@@ -77,3 +77,68 @@ export interface SearchRes {
   q: string;
   start: number;
 }
+
+export interface Book {
+  description: string;
+  links: Link[];
+  title: string;
+  covers: number[];
+  subject_places: string[];
+  subject_people: string[];
+  key: string;
+  authors: Author[];
+  excerpts: Excerpt[];
+  type: Type3;
+  subjects: string[];
+  latest_revision: number;
+  revision: number;
+  created: Created;
+  last_modified: LastModified;
+}
+
+export interface Link {
+  title: string;
+  url: string;
+  type: Type;
+}
+
+export interface Type {
+  key: string;
+}
+
+export interface Author {
+  author: Author2;
+  type: Type2;
+}
+
+export interface Author2 {
+  key: string;
+}
+
+export interface Type2 {
+  key: string;
+}
+
+export interface Excerpt {
+  comment: string;
+  excerpt: string;
+  author: Author3;
+}
+
+export interface Author3 {
+  key: string;
+}
+
+export interface Type3 {
+  key: string;
+}
+
+export interface Created {
+  type: string;
+  value: string;
+}
+
+export interface LastModified {
+  type: string;
+  value: string;
+}

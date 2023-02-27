@@ -1,13 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+
+import Link from "next/link";
+
 type Props = {
+  isLink?: boolean;
+  query: string;
+  id: string;
   title: string;
   author: string[];
   coverID: number;
 };
 
-const BookCard = ({ title, author, coverID }: Props) => {
+const BookCard = ({ query, id, title, author, coverID, isLink = true }: Props) => {
   return (
-    <div className="flex bg-gray-50 p-4 rounded-md gap-4">
+    <Link
+      href={isLink ? `${id}?q=${query}` : "!#"}
+      className="flex bg-gray-50 p-4 rounded-md gap-4"
+    >
       <img
         className="rounded-lg "
         src={
@@ -23,7 +32,7 @@ const BookCard = ({ title, author, coverID }: Props) => {
           {author === undefined ? "No author" : author.join(",")}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
